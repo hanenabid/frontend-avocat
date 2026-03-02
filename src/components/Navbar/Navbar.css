@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
+/* ========= NAVBAR ROOT ========= */
+.navbar-root {
+  background: #1b263b !important;
+}
+
+/* ========= LOGO ========= */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  margin-right: 1.5rem;
+}
+
+/* ========= CENTER NAV LINKS ========= */
+.navbar-link {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  color: white !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  font-size: 15px !important;
+  margin: 0 0.5rem !important;
+  transition: color 0.2s !important;
+}
+
+.navbar-link:hover {
+  color: #cfae70 !important;
+  background: transparent !important;
+}
+
+/* ========= RIGHT SIDE ========= */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ========= LANGUAGE ICON BUTTON ========= */
+.navbar-icon-btn {
+  color: #cfae70 !important;
+  border: 1px solid #cfae70 !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+.navbar-icon-btn:hover {
+  background: #cfae70 !important;
+  color: #1b263b !important;
+}
+
+/* ========= ESPACE AVOCATS (outlined) ========= */
+.navbar-outlined-btn {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  color: white !important;
+  border-color: white !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  font-size: 14px !important;
+  padding: 6px 20px !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+.navbar-outlined-btn:hover {
+  background: white !important;
+  color: #1b263b !important;
+}
+
+/* ========= TROUVER UN AVOCAT (gold filled) ========= */
+.navbar-gold-btn {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  background: #cfae70 !important;
+  color: #1b263b !important;
+  border: none !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  font-size: 14px !important;
+  padding: 6px 20px !important;
+  box-shadow: none !important;
+  transition: background 0.2s !important;
+}
+
+.navbar-gold-btn:hover {
+  background: #b8943e !important;
+}
+
+/* ========= RESPONSIVE ========= */
+
+/* Tablette : cacher les 2 boutons, garder langue */
+@media (max-width: 960px) {
+  .navbar-outlined-btn,
+  .navbar-gold-btn {
+    display: none !important;
+  }
+}
+
+/* Mobile : cacher tout le navbar-right sauf le hamburger */
+@media (max-width: 600px) {
+  .navbar-right {
+    display: none !important;
+  }
+}
+
+/* Mobile menu items */
+.navbar-mobile-menu .MuiMenuItem-root {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #1b263b !important;
+  padding: 12px 24px !important;
+}
+
+.navbar-mobile-menu .MuiMenuItem-root:hover {
+  background: #f5f0e8 !important;
+  color: #cfae70 !important;
+}
+
+.navbar-mobile-divider {
+  border-top: 1px solid #e2e8f0;
+  margin: 4px 0 !important;
+}
+
+.navbar-mobile-btn-espace {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 600 !important;
+  color: #1b263b !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+.navbar-mobile-btn-avocat {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 700 !important;
+  color: #cfae70 !important;
+}

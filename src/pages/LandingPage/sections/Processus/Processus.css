@@ -1,0 +1,212 @@
+.processus-section {
+  background: #fff;
+  padding: 5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.processus-header {
+  margin-bottom: 4rem;
+}
+
+.processus-pre-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.processus-pre-title.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.processus-pre-title::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: #c9a84c;
+}
+
+.processus-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  color: #1b263b;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  max-width: 580px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+}
+
+.processus-title.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.processus-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 520px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+}
+
+.processus-subtitle.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Steps layout ─────────────────────────────────────── */
+.processus-steps {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* ── Individual step ──────────────────────────────────── */
+.processus-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 0 0.75rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.processus-step.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* staggered delay via CSS custom property set in JS */
+.processus-step { transition-delay: var(--step-delay, 0ms); }
+
+/* ── Circle ───────────────────────────────────────────── */
+.processus-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #1b263b;
+  color: #c9a84c;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+/* Pulsing ring on hover */
+.processus-circle::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px solid #c9a84c;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.processus-step:hover .processus-circle {
+  background: #c9a84c;
+  color: #1b263b;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3);
+}
+
+.processus-step:hover .processus-circle::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Connector line (animated draw) ──────────────────── */
+.processus-line {
+  flex-shrink: 0;
+  width: 60px;
+  height: 1px;
+  margin-top: 26px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* base dashed track */
+.processus-line::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-top: 1.5px dashed #e2e8f0;
+}
+
+/* animated gold fill */
+.processus-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-top: 1.5px solid #c9a84c;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s ease;
+}
+
+.processus-line.is-visible::after {
+  transform: scaleX(1);
+}
+
+/* ── Step text ────────────────────────────────────────── */
+.processus-step-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1b263b;
+  transition: color 0.25s;
+}
+
+.processus-step:hover .processus-step-title {
+  color: #c9a84c;
+}
+
+.processus-step-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 160px;
+  margin: 0 auto;
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 900px) {
+  .processus-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+  .processus-line { display: none; }
+  .processus-step { padding: 0; }
+}
+
+@media (max-width: 480px) {
+  .processus-steps { grid-template-columns: 1fr; }
+}

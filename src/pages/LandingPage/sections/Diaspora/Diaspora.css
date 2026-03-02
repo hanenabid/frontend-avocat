@@ -1,0 +1,240 @@
+/* ── Section ───────────────────────────────────────────── */
+.diaspora-section {
+  background: #fff;
+  padding: 5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.diaspora-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ENTRY ANIMATIONS
+   Rule: each element owns exactly ONE transform axis.
+   Hover transforms only activate on .is-visible elements
+   so they can never fight the entry animation.
+═══════════════════════════════════════════════════════ */
+
+/* header text slides from left */
+.diaspora-pre-title,
+.diaspora-title,
+.diaspora-subtitle {
+  opacity: 0;
+  transform: translateX(-20px);
+  /* NO transition: all — explicit properties only */
+  transition: opacity 0.55s ease var(--delay, 0ms),
+              transform 0.55s ease var(--delay, 0ms);
+}
+
+.diaspora-pre-title.is-visible,
+.diaspora-title.is-visible,
+.diaspora-subtitle.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+  /* once visible, no more !important needed */
+}
+
+/* country tags pop up */
+.diaspora-country-tag {
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+  transition: opacity 0.45s ease var(--delay, 0ms),
+              transform 0.45s ease var(--delay, 0ms),
+              box-shadow 0.25s ease,
+              background 0.25s ease;
+}
+
+.diaspora-country-tag.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/*
+  Hover on country tag — only after visible.
+  Uses translateY only (no scale conflict).
+*/
+.diaspora-country-tag.is-visible:hover {
+  transform: translateY(-3px) scale(1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* features slide from right */
+.diaspora-feature {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.55s ease var(--delay, 0ms),
+              transform 0.55s ease var(--delay, 0ms);
+}
+
+.diaspora-feature.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* hover nudge — only after visible */
+.diaspora-feature.is-visible:hover {
+  transform: translateX(6px);
+}
+
+/* ── Pre-title ─────────────────────────────────────────── */
+.diaspora-pre-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.diaspora-pre-title::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: #c9a84c;
+  flex-shrink: 0;
+}
+
+/* ── Title / subtitle ──────────────────────────────────── */
+.diaspora-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  color: #1b263b;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+.diaspora-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* ── Country tags ──────────────────────────────────────── */
+.diaspora-countries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.diaspora-country-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #f5f0e8;
+  border: 1px solid #e8e0d0;
+  border-radius: 2rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #1b263b;
+  cursor: default;
+}
+
+.diaspora-country-code {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #c9a84c;
+}
+
+.diaspora-country-globe {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+/* ── Feature items ─────────────────────────────────────── */
+.diaspora-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.diaspora-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/*
+  Icon: float animation lives only on .diaspora-feature-icon,
+  hover scale also lives here BUT we use animation-play-state
+  to pause the float on hover so the two never overlap.
+*/
+.diaspora-feature-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #f5f0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  /* float animation */
+  animation: floatSoft 4s ease-in-out infinite;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* pause float + scale up on hover */
+.diaspora-feature.is-visible:hover .diaspora-feature-icon {
+  animation-play-state: paused;
+  transform: scale(1.15);
+  background: #fdf6e3;
+}
+
+@keyframes floatSoft {
+  0%,  100% { transform: translateY(0); }
+  50%        { transform: translateY(-4px); }
+}
+
+.diaspora-feature-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1b263b;
+  display: block;
+  margin-bottom: 0.3rem;
+  transition: color 0.25s;
+}
+
+.diaspora-feature.is-visible:hover .diaspora-feature-title {
+  color: #c9a84c;
+}
+
+.diaspora-feature-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .diaspora-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* on mobile, slide from bottom instead of sides */
+  .diaspora-pre-title,
+  .diaspora-title,
+  .diaspora-subtitle,
+  .diaspora-feature {
+    transform: translateY(20px);
+  }
+
+  .diaspora-pre-title.is-visible,
+  .diaspora-title.is-visible,
+  .diaspora-subtitle.is-visible,
+  .diaspora-feature.is-visible {
+    transform: translateY(0);
+  }
+}

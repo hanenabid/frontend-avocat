@@ -1,0 +1,255 @@
+.trust-section {
+  background: #fff;
+  padding: 5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+/* ── LEFT CARD ────────────────────────────────────────── */
+.trust-card {
+  background: #f5f0e8;
+  border-radius: 1.25rem;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  border: 1px solid #e8e0d0;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.trust-card.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* subtle shimmer background on hover */
+.trust-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.trust-card:hover::before {
+  opacity: 1;
+}
+
+/* ── Badge ────────────────────────────────────────────── */
+.trust-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trust-badge-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #1b263b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  position: relative;
+  transition: border-color 0.3s, transform 0.4s ease;
+}
+
+/* spinning dashed ring */
+.trust-badge-circle::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1.5px dashed #c9a84c;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: spin-ring 8s linear infinite;
+  animation-play-state: paused;
+}
+
+@keyframes spin-ring {
+  to { transform: rotate(360deg); }
+}
+
+.trust-card:hover .trust-badge-circle {
+  border-color: #c9a84c;
+  transform: scale(1.05);
+}
+
+.trust-card:hover .trust-badge-circle::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.trust-badge-circle span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #1b263b;
+  transition: color 0.3s;
+}
+
+.trust-card:hover .trust-badge-circle span {
+  color: #c9a84c;
+}
+
+.trust-card-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #1b263b;
+}
+
+.trust-card-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 360px;
+}
+
+/* ── RIGHT CONTENT ────────────────────────────────────── */
+.trust-content {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.65s ease 0.15s, transform 0.65s ease 0.15s;
+}
+
+.trust-content.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.trust-pre-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.trust-pre-title::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: #c9a84c;
+  flex-shrink: 0;
+}
+
+.trust-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  color: #1b263b;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+.trust-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* ── Steps ────────────────────────────────────────────── */
+.trust-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.trust-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: var(--step-delay, 0ms);
+}
+
+.trust-step.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.trust-step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1b263b;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.trust-step:hover .trust-step-num {
+  background: #c9a84c;
+  color: #1b263b;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(201, 168, 76, 0.35);
+}
+
+.trust-step-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1b263b;
+  display: block;
+  margin-bottom: 0.35rem;
+  transition: color 0.25s;
+}
+
+.trust-step:hover .trust-step-title {
+  color: #c9a84c;
+}
+
+.trust-step-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .trust-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .trust-card,
+  .trust-content {
+    transform: translateY(30px);
+  }
+
+  .trust-card.is-visible,
+  .trust-content.is-visible {
+    transform: translateY(0);
+  }
+}

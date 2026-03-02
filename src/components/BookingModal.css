@@ -1,0 +1,273 @@
+/* Enhanced Modal Overlay - Ensure it covers everything */
+.booking-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  overflow-y: auto;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  isolation: isolate;
+}
+
+/* Ensure modal appears above any potential fixed elements */
+.booking-modal-overlay::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: -1;
+}
+
+.booking-modal {
+  background: var(--neutral-white);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  min-width: 500px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(1);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+/* Modal Close Button */
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6b7280;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.modal-close-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #374151;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Progress Bar */
+.progress-bar { display: flex; justify-content: space-between; margin-bottom: 24px; position: relative; }
+.progress-bar::before { content: ''; position: absolute; top: 15px; left: 0; right: 0; height: 2px; background: rgba(0,0,0,0.06); z-index: 1; }
+.progress-bar::after { content: ''; position: absolute; top: 15px; left: 0; width: 25%; height: 2px; background: var(--secondary-gold); z-index: 2; }
+.progress-step { display:flex; flex-direction:column; align-items:center; position:relative; z-index:3 }
+.step-circle { width:30px; height:30px; border-radius:50%; background: rgba(0,0,0,0.06); display:flex; align-items:center; justify-content:center; font-weight:600; font-size:14px; margin-bottom:8px }
+.progress-step.active .step-circle { background: var(--secondary-gold); color: var(--primary-navy) }
+.progress-step span { font-size:12px; color: #6b7280 }
+
+/* Lawyer Info */
+.lawyer-info-card { display:flex; align-items:center; gap:16px; background: linear-gradient(90deg, var(--primary-navy-dark) 0%, var(--secondary-deep-green-dark) 100%); color: var(--neutral-white); padding:12px 16px; border-radius:12px; margin-bottom:24px }
+.lawyer-avatar { width:56px; height:56px; border-radius:50%; overflow:hidden; flex:0 0 56px; border:2px solid rgba(255,255,255,0.12); box-shadow: 0 6px 18px rgba(0,0,0,0.08) }
+.lawyer-avatar img { width:100%; height:100%; object-fit:cover; display:block }
+.lawyer-details { flex:1 }
+.lawyer-name-row { display:flex; align-items:center; gap:8px }
+.lawyer-name { margin:0; font-size:16px; font-weight:700 }
+.lawyer-verified { background: rgba(0,0,0,0.15); padding:4px 8px; border-radius:999px; font-size:13px }
+.lawyer-specialty, .lawyer-location { margin:0; font-size:13px; opacity:0.95 }
+.lawyer-actions { margin-left:8px }
+.lawyer-edit-btn { background: rgba(255,255,255,0.12); border:none; color:var(--neutral-white); padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:700 }
+.lawyer-edit-btn:hover { background: rgba(255,255,255,0.18) }
+
+/* Section */
+.section { margin-bottom:24px }
+.section h4 { text-align:center; font-size:18px; font-weight:600; color: var(--primary-navy); margin-bottom:20px }
+
+/* Calendar */
+.calendar-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px }
+.nav-btn { background:none; border:none; font-size:24px; cursor:pointer; padding:8px; border-radius:4px }
+.nav-btn:hover { background: rgba(0,0,0,0.04) }
+.month-year { font-size:18px; font-weight:600 }
+.calendar-grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:8px }
+.calendar-day { padding:12px 8px; text-align:center; border-radius:8px; cursor:pointer; transition: all 0.2s; border:1px solid transparent }
+.calendar-day:not(.empty):not(.disabled):hover { background: rgba(0,0,0,0.02) }
+.calendar-day.selected { background: var(--secondary-gold); color: var(--primary-navy) }
+.calendar-day.disabled { opacity:0.3; cursor:not-allowed }
+.calendar-day.empty { cursor:default }
+.day-name { font-size:12px; margin-bottom:2px }
+.day-number { font-size:18px; font-weight:600; margin-bottom:2px }
+.month-name { font-size:12px }
+
+/* Time Slots */
+.time-slots { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-bottom:16px }
+.time-slot { padding:12px; border:1px solid rgba(0,0,0,0.06); border-radius:8px; background: var(--neutral-white); cursor:pointer; transition: all 0.2s; font-size:14px }
+.time-slot:not(.disabled):hover { border-color: var(--primary-navy) }
+.time-slot.selected { background: var(--primary-navy); color: var(--neutral-white); border-color: var(--primary-navy) }
+.time-slot.disabled { opacity:0.3; cursor:not-allowed; background: transparent; border-color: transparent; color: #6b7280 }
+.see-more { width:100%; padding:12px; background:none; border:none; color: var(--primary-navy); cursor:pointer; font-size:14px }
+
+.service-item { background: var(--neutral-white) }
+.service-item.selected { border-color: var(--primary-navy); box-shadow: 0 8px 24px rgba(27,38,59,0.08) }
+.services-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap:12px }
+.service-item { padding:12px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); text-align:left; cursor:pointer; display:flex; flex-direction:column; gap:8px }
+.service-header { display:flex; justify-content:space-between; align-items:center; gap:8px }
+.service-name { font-weight:700 }
+.service-price { font-weight:800 }
+.service-desc { color:#6b7280; font-size:13px }
+.total-price { margin-top:12px; text-align:right; font-weight:800 }
+
+.file-upload-block { margin-top:12px }
+.file-upload-label.booking { display:flex; gap:12px; align-items:center; padding:12px; border-radius:8px; border:1px dashed rgba(0,0,0,0.06); cursor:pointer; background: var(--neutral-white) }
+.file-name { font-size:13px }
+.file-meta { font-size:12px; color:#6b7280; margin-left:6px }
+
+.review-step { background: rgba(0,0,0,0.02); padding:12px; border-radius:8px }
+
+/* Loading and Empty States */
+.loading-slots { text-align:center; padding:20px; color:#6b7280; font-style:italic }
+.no-slots { text-align:center; padding:20px; color:#6b7280; background: rgba(0,0,0,0.02); border-radius:8px; margin-bottom:16px }
+
+/* Messages */
+.error-message { background: #fef2f2; border: 1px solid #fecaca; color: var(--secondary-gold-dark); padding:12px 16px; border-radius:8px; font-size:14px; margin-bottom:20px; font-weight:700 }
+.success-message { background: #f0fdf4; border:1px solid #bbf7d0; color: #166534; padding:12px 16px; border-radius:8px; font-size:14px; margin-bottom:20px }
+
+/* Buttons */
+.button-group { display:flex; gap:12px }
+.confirm-btn { flex:1; background: var(--primary-navy); color: var(--neutral-white); border:none; padding:12px 24px; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; transition: background-color 0.2s }
+.confirm-btn:hover:not(:disabled) { background: #162233 }
+.confirm-btn:disabled { background: #9ca3af; cursor:not-allowed; opacity:0.8 }
+.cancel-btn { flex:1; background: rgba(0,0,0,0.04); color: var(--primary-navy); border:none; padding:12px 24px; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; transition: background-color 0.2s }
+
+/* Original appointment slot indicator for reschedule mode */
+.time-slot.original-slot {
+  border: 2px solid #CFAE70;
+  position: relative;
+}
+
+.time-slot.original-slot:not(.selected) {
+  background: rgba(207, 174, 112, 0.1);
+}
+
+.original-indicator {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  color: #CFAE70;
+  font-size: 8px;
+  line-height: 1;
+}
+.cancel-btn:hover { background: rgba(0,0,0,0.06) }
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+  .booking-modal {
+    min-width: auto;
+    width: 95%;
+    margin: 20px;
+    padding: 20px;
+    max-height: 85vh;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .lawyer-info {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .date-time-selection {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .date-column, .time-column {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .time-slots {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  
+  .time-slot {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+  
+  .services-section {
+    flex-direction: column;
+  }
+  
+  .services-list, .summary-section {
+    width: 100%;
+  }
+  
+  .modal-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .modal-footer button {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-modal {
+    width: 98%;
+    margin: 10px;
+    padding: 16px;
+    border-radius: 12px;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .time-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .time-slot {
+    padding: 8px 6px;
+    font-size: 0.8rem;
+  }
+  
+  .file-upload-area {
+    padding: 16px;
+  }
+  
+  .notes-section textarea {
+    min-height: 80px;
+  }
+}
