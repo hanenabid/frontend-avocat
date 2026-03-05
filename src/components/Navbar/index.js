@@ -12,9 +12,6 @@ import { useTranslation } from "react-i18next";
 import Logo from "../Logo";
 import "./Navbar.css";
 
-// flag-icons — ajoute dans index.html ou index.css :
-// @import "https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css";
-
 const pages = [
   { label: "nav.comment",  hash: "comment-ca-marche" },
   { label: "nav.clients",  hash: "pour-les-clients" },
@@ -48,6 +45,8 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorLang,  setAnchorLang]  = React.useState(null);
 
+  const appBarRef = React.useRef(null);
+
   const openNav   = (e) => setAnchorElNav(e.currentTarget);
   const closeNav  = ()  => setAnchorElNav(null);
   const openLang  = (e) => setAnchorLang(e.currentTarget);
@@ -72,28 +71,44 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="fixed" elevation={1} className="navbar-root">
+    <AppBar position="fixed" elevation={1} className="navbar-root" ref={appBarRef}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
-          {/* LOGO */}
-          <Box className="navbar-logo">
-            <Logo />
-          </Box>
-
           {/* MOBILE MENU BUTTON */}
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton color="inherit" onClick={openNav}>
+          <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
+            <IconButton
+              color="inherit"
+              onClick={openNav}
+              aria-controls="mobile-nav-menu"
+              aria-haspopup="true"
+            >
               <MenuIcon />
             </IconButton>
+
             <Menu
+              id="mobile-nav-menu"
               anchorEl={anchorElNav}
               open={Boolean(anchorElNav)}
               onClose={closeNav}
-              PaperProps={{ sx: { width: 260, mt: 1 } }}
+              keepMounted
+              disableScrollLock
+              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+              transformOrigin={{ vertical: "top",    horizontal: "left" }}
+              PaperProps={{
+                sx: {
+                  width: 260,
+                  mt: 1,
+                  zIndex: (theme) => theme.zIndex.appBar + 10,
+                },
+              }}
             >
               {pages.map((p) => (
-                <MenuItem key={p.label} onClick={() => handleNavClick(p)} className="navbar-mobile-menu">
+                <MenuItem
+                  key={p.label}
+                  onClick={() => handleNavClick(p)}
+                  className="navbar-mobile-menu"
+                >
                   {t(p.label)}
                 </MenuItem>
               ))}
@@ -109,21 +124,26 @@ function Navbar() {
               <Divider className="navbar-mobile-divider" />
 
               <MenuItem
-                onClick={() => { navigate("/signup"); closeNav(); }}
+                onClick={() => { navigate("/login"); closeNav(); }}
                 className="navbar-mobile-btn-espace"
               >
-                {t("nav.espaceAvocats", { defaultValue: "Espace Avocats" })}
+                {t("nav.login", { defaultValue: "Se connecter" })}
               </MenuItem>
               <MenuItem
-                onClick={() => { navigate("/lawyers"); closeNav(); }}
+                onClick={() => { navigate("/signup"); closeNav(); }}
                 className="navbar-mobile-btn-avocat"
               >
-                {t("nav.trouverAvocat", { defaultValue: "Trouver un avocat" })}
+                {t("nav.signup", { defaultValue: "S'inscrire" })}
               </MenuItem>
             </Menu>
           </Box>
 
-          {/* CENTER LINKS — desktop */}
+          {/* LOGO */}
+          <Box className="navbar-logo" sx={{ flexGrow: { xs: 1, md: 0 } }}>
+            <Logo />
+          </Box>
+
+          {/* CENTER LINKS — desktop only */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "center" }}>
             {pages.map((p) => (
               <Button key={p.label} onClick={() => handleNavClick(p)} className="navbar-link">
@@ -132,9 +152,10 @@ function Navbar() {
             ))}
           </Box>
 
-          {/* RIGHT SIDE — desktop */}
+          {/* RIGHT SIDE */}
           <Box className="navbar-right">
 
+            {/* Language picker */}
             <Box sx={{ display: { xs: "none", sm: "flex" } }}>
               <Tooltip title="Language">
                 <IconButton onClick={openLang} className="navbar-icon-btn">
@@ -145,6 +166,10 @@ function Navbar() {
                 anchorEl={anchorLang}
                 open={Boolean(anchorLang)}
                 onClose={closeLang}
+                keepMounted
+                disableScrollLock
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                transformOrigin={{ vertical: "top",    horizontal: "right" }}
                 PaperProps={{ sx: { minWidth: 170, mt: 1 } }}
               >
                 {languages.map(({ code, label, flagCode, i18n: i18nKey }) => (
@@ -155,20 +180,22 @@ function Navbar() {
               </Menu>
             </Box>
 
+            {/* Se connecter (outlined) */}
             <Button
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/login")}
               variant="outlined"
               className="navbar-outlined-btn"
             >
-              {t("nav.espaceAvocats", { defaultValue: "Espace Avocats" })}
+              {t("nav.login", { defaultValue: "Se connecter" })}
             </Button>
 
+            {/* S'inscrire (gold filled) */}
             <Button
               onClick={() => navigate("/signup")}
               variant="contained"
               className="navbar-gold-btn"
             >
-              {t("nav.trouverAvocat", { defaultValue: "Trouver un avocat" })}
+              {t("nav.signup", { defaultValue: "S'inscrire" })}
             </Button>
 
           </Box>
